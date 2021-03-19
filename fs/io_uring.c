@@ -2183,6 +2183,8 @@ static int __io_submit_sqe(struct io_ring_ctx *ctx, struct io_kiocb *req,
 static struct async_list *io_async_list_from_req(struct io_ring_ctx *ctx,
 						 struct io_kiocb *req)
 {
+	if (!(req->flags & REQ_F_ISREG))
+		return NULL;
 	switch (req->submit.opcode) {
 	case IORING_OP_READV:
 	case IORING_OP_READ_FIXED:
